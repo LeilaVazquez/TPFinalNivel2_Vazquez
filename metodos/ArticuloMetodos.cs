@@ -67,7 +67,7 @@ namespace metodos
 
             try
             {
-                datos.setearConsulta("Insert into ARTICULOS (Codigo, Nombre, Descripcion, Precio, IdMarca, IdCategoria, ImagenUrl) values ('"+ nuevo.Codigo+ "','"+ nuevo.Nombre + "','" + nuevo.Descripcion + "','" + nuevo.Precio + "',@idMarca, @idCategoria, UrlImagen)");
+                datos.setearConsulta("Insert into ARTICULOS (Codigo, Nombre, Descripcion, Precio, IdMarca, IdCategoria, ImagenUrl) values ('"+ nuevo.Codigo+ "','"+ nuevo.Nombre + "','" + nuevo.Descripcion + "','" + nuevo.Precio + "',@idMarca, @idCategoria, @ImagenUrl)");
                 datos.setearParametro("@idMarca", nuevo.Marca.Id);
                 datos.setearParametro("@idCategoria",nuevo.Categoria.Id);
                 datos.setearParametro("@ImagenUrl", nuevo.ImagenUrl);
@@ -93,8 +93,8 @@ namespace metodos
                 datos.setearParametro("@codigo", art.Codigo);
                 datos.setearParametro("@nombre", art.Nombre);
                 datos.setearParametro("@descrip", art.Descripcion);
-                datos.setearParametro("@idMarca", art.Marca);
-                datos.setearParametro("@idCat", art.Categoria);
+                datos.setearParametro("@idMarca", art.Marca.Id);
+                datos.setearParametro("@idCat", art.Categoria.Id);
                 datos.setearParametro("@imagen", art.ImagenUrl);
                 datos.setearParametro("@precio", art.Precio);
                 datos.setearParametro("@id", art.Id);
@@ -239,7 +239,7 @@ namespace metodos
 
             try
             {
-                datos.setearConsulta("delete from ARTICULOS where = @id");
+                datos.setearConsulta("delete from ARTICULOS where Id = @id");
                 datos.setearParametro("@id", id);
                 datos.ejecutarAccion();
             }

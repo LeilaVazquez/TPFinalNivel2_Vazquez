@@ -44,7 +44,9 @@ namespace Presentacion
 
             try
             {
-                if(articulo == null)
+                if (validarAgregar())
+                    return;
+                if (articulo == null)
                     articulo = new Articulos();
 
                 articulo.Codigo= txtCodigo.Text;
@@ -65,9 +67,20 @@ namespace Presentacion
                     nuevoart.agregar(articulo);
                     MessageBox.Show("Artículo agregado");
                 }
-                if(archivo != null &&  !(txtImagen.Text.ToUpper().Contains("http")))
+                if(archivo != null &&  !(txtImagen.Text.ToUpper().Contains("HTTP")))
                 {
-                    File.Copy(archivo.FileName, ConfigurationManager.AppSettings["images-folder"] + archivo.SafeFileName);
+
+                    try
+                    {
+                        File.Copy(archivo.FileName, ConfigurationManager.AppSettings["images-folder"] + archivo.SafeFileName);
+                    }
+                    catch (Exception)
+                    {
+
+                        MessageBox.Show("Imagen guardada previamente");
+                    }
+                    
+
                 }
                 Close();
 
@@ -130,11 +143,64 @@ namespace Presentacion
 
             cargarImagen(txtImagen.Text);
         }
+        private bool soloNumeros(string cadena)
+        {
+            foreach (char caracter in cadena)
+            {
+                if (!(char.IsNumber(caracter)))
+                {
+                    return false;
+                }
+            }
+            return true;
 
+        }
+        private bool validarAgregar()
+        {          
+            if (string.IsNullOrEmpty(txtCodigo.Text))
+            {
+                MessageBox.Show("Ingrese el codigo de articulo");
+                return true;
+            }
+            if(string.IsNullOrEmpty(txtNombre.Text))
+            {
+                MessageBox.Show("Ingrese nombre de articulo");
+                return true;
+            }
+            if (cboMarca.SelectedIndex < 0)
+            {
+                MessageBox.Show("Seleccione la marca");
+                return true;
+            }
+            if (cboCategoria.SelectedIndex < 0)
+            {
+                MessageBox.Show("Seleccione la categoría");
+                return true;
+            }
+            if (string.IsNullOrEmpty(txtDescripcion.Text))
+            {
+                MessageBox.Show("Ingrese la descripcion");
+                return true;
+            }
+            if (string.IsNullOrEmpty(txtPrecio.Text))
+            {
+                MessageBox.Show("Ingrese el precio");
+                return true;
+            }
+            if (string.IsNullOrEmpty(txtImagen.Text))
+            {
+                MessageBox.Show("Seleccione una imagen");
+                return true;
+            }
+
+            return false;
+
+        }
         private void btnAgregarImagen_Click(object sender, EventArgs e)
         {
             archivo = new OpenFileDialog();
             archivo.Filter = "jpg|*.jpg;|png|*.png";
+            
             
             if(archivo.ShowDialog() == DialogResult.OK)
             {
