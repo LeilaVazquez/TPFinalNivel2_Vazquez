@@ -12,6 +12,8 @@ namespace dominio
 
         public string Descrip { get; set; }
 
+        public int Num { get; set; }
+
         public override string ToString()
         {
             return Descrip; 

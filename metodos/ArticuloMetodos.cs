@@ -38,10 +38,11 @@ namespace metodos
 
 
                     if(!(lector["ImagenUrl"] is DBNull))
-                    aux.ImagenUrl = (string)lector["ImagenUrl"];
+                        aux.ImagenUrl = (string)lector["ImagenUrl"];
 
                     aux.Marca = new Marca();
                     aux.Marca.Id = (int)lector["IdMarca"];
+                    //aux.Marca.Num = (int)lector["Num"];
                     aux.Marca.Descrip = (string)lector["Marca"];
                     aux.Categoria = new Categoria();
                     aux.Categoria.Id = (int)lector["IdCategoria"];
